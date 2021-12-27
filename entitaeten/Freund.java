@@ -13,19 +13,19 @@ package entitaeten;
 import java.util.ArrayList;
 
 public class Freund {
-    private String schluessel;
+    private int schluessel;
     private String vorname;
     private String nachname;
     private String geburtsdatum;
-    private ArrayList<Adresse> addressen;
+    private ArrayList<Adresse> adressen;
 
     // Konstruktor zum Anlegen eines neuen Freundes
-    public Freund(String vorname, String nachname, String geburtsdatum, ArrayList<Adresse> addressen, String schluessel) {
+    public Freund(String vorname, String nachname, String geburtsdatum, ArrayList<Adresse> adressen, int schluessel) {
         this.schluessel = schluessel;
         this.vorname = vorname;
         this.nachname = nachname;
         this.geburtsdatum = geburtsdatum;
-        this.addressen = addressen;
+        this.adressen = adressen;
     }
 
     // Auslesen und Setzen von Attributen
@@ -53,11 +53,15 @@ public class Freund {
         this.geburtsdatum = geburtsdatum;
     }
 
-    public ArrayList<Adresse> getAddressen() {
-        return this.addressen;
+    public ArrayList<Adresse> getAdressen() {
+        return this.adressen;
     }
 
-    public String getSchluessel() {
+    public void setAdressen(ArrayList<Adresse> adressen) {
+        this.adressen = adressen;
+    }
+
+    public int getSchluessel() {
         return this.schluessel;
     }
 }
