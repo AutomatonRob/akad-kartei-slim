@@ -25,7 +25,7 @@ public class Freund {
         this.vorname = vorname;
         this.nachname = nachname;
         this.geburtsdatum = geburtsdatum;
-        this.addressen = new ArrayList<Adresse>(addressen);
+        this.addressen = addressen;
     }
 
     // Auslesen und Setzen von Attributen
