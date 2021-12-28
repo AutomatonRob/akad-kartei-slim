@@ -5,12 +5,14 @@
     die Gesamtanzahl der Freunde, die gespeichert sind, ausgeben können. Berücksichtigen Sie
     auch mögliche Fehler, die auftreten können.
 */
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import entitaeten.Freund;
 import entitaeten.Adresse;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Arrays;
+
 
 /**
  * 
@@ -51,19 +53,19 @@ public class Kartei {
     }
 
     private String adressenAusgeben(ArrayList<Adresse> adressen) {
-        StringBuilder str = new StringBuilder();
-        int index = 1;
+        int index = 0;
+        String[] arrStr = new String[adressen.size()];
 
         for (Adresse adresse : adressen) {
-            str.append("("+ index++ + ") " + adresse.getStrasse() + ", " + adresse.getPlz() + " " + adresse.getOrt());
+            arrStr[index] = "("+ ++index + ") " + adresse.getStrasse() + ", " + adresse.getPlz() + " " + adresse.getOrt();
         }
 
-        return str.toString();
+        return String.join(" ", arrStr);
     }
 
-    private void freundHinzufuegen(int schluessel) {
+    private void freundHinzufuegen(int addSchluessel) {
         System.out.println("\n### Einen neuen Freundeeintrag anlegen");
-        System.out.println("Vorname eingeben: ");
+        System.out.println("\nVorname eingeben: ");
         String vorname = scan.nextLine();
         System.out.println("\nNachname eingeben: ");
         String nachname = scan.nextLine();
@@ -72,40 +74,36 @@ public class Kartei {
         scan.nextLine();
 
         while (!validiereGeburtsdatum(geburtsdatum)) {
-            System.out.println("\nEingabeformat Fehlerhaft! Geburtsdatum eingeben (DD.MM.YYYY): ");
+            System.out.println("\nEingabeformat fehlerhaft! Bitte Geburtsdatum erneut eingeben (DD.MM.YYYY): ");
             geburtsdatum = scan.next();
             scan.nextLine();
         }
     
-        ArrayList<Adresse> adressen = freundAdressenAnlegen();
-
-        freunde.add(new Freund(vorname, nachname, geburtsdatum, adressen, schluessel));
+        freunde.add(new Freund(vorname, nachname, geburtsdatum, freundAdressenAnlegen(new ArrayList<Adresse>()), addSchluessel));
     }
-
-    
 
     private void freundAendern() {
         System.out.println("\nBitte Schlüssel des Freundes eingeben, der bearbeitet werden soll:");
-        int schluessel = getInputInt();
-        int freundIndex = freundIndexViaSchluesselSuchen(schluessel);
+        int editSchluessel = getInputInt();
+        int freundIndex = freundIndexViaSchluessel(editSchluessel);
 
         if (freundIndex < 0) {
-            System.out.println("\nEs wurde kein Freund mit dem Schlüssel " + schluessel + " gefunden.");
+            System.out.println("\nEs wurde kein Freund mit dem Schlüssel " + editSchluessel + " gefunden.");
         } 
         else {
             Freund freund = freunde.get(freundIndex);
             ArrayList<Adresse> adressen = freund.getAdressen();
-            ArrayList<Integer> options = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5));
+            List<Integer> options = Arrays.asList(0, 1, 2, 3, 4, 5);
             int auswahl = -1;
 
-            System.out.println("### Änderung");
+            System.out.println("\n### Änderung");
             System.out.println("(1) Vorname: " + freund.getVorname());
             System.out.println("(2) Nachname: " + freund.getNachname());
             System.out.println("(3) Geburtsdatum: " + freund.getGeburtsdatum());
             System.out.println("(4) Adressen ändern: " + adressenAusgeben(freund.getAdressen()));
-            System.out.println("(5) Neue Adresse anlegen.");
+            System.out.println("(5) Neue Adresse anlegen");
             System.out.println("(0) Abbrechen");
-            
+
             while (!options.contains(auswahl)) {
                 auswahl = getInputInt();
             }
@@ -114,50 +112,48 @@ public class Kartei {
                 case 0:
                     return;
                 case 1:
-                    System.out.println("Neuer Vorname: ");
+                    System.out.println("\nNeuer Vorname: ");
                     freund.setVorname(scan.nextLine());
                     break;
                 case 2:
-                    System.out.println("Neuer Nachname: ");
+                    System.out.println("\nNeuer Nachname: ");
                     freund.setNachname(scan.nextLine());
                     break;
                 case 3:
-                    System.out.println("Neues Geburtsdatum: ");
+                    System.out.println("\nNeues Geburtsdatum: ");
                     freund.setGeburtsdatum(scan.nextLine());
                     break;
                 case 4:
-                    freund.setAdressen(adressen.isEmpty() ? freundAdressenAnlegen() : freundAdressenAendern(adressen));
+                    freund.setAdressen(adressen.isEmpty() ? freundAdressenAnlegen(adressen) : freundAdressenAendern(adressen));
                     break;
                 case 5:
-                    freund.setAdressen(freundAdressenAnlegen());
+                    freund.setAdressen(freundAdressenAnlegen(adressen));
                     break;
             }
         }
     }
 
-    // TODO: Adressänderungen werden auf ALLE Instanzen von Adresse in allen Freunden geschrieben!
     private static ArrayList<Adresse> freundAdressenAendern(ArrayList<Adresse> adressen) {
         int adressId = -1;
 
-        while (adressId < 1 || adressId > adressen.size()) {
-            System.out.println("Welche Adress-ID soll geändert werden:");
+        while (adressId < 0 || adressId > adressen.size()) {
+            System.out.println("\nWelche Adress-ID soll geändert werden:");
             adressId = getInputInt() - 1;
         }
 
         Adresse editAdresse = adressen.get(adressId);        
 
-        System.out.println("\nNeue Straßen und Hausnummer:");
+        System.out.println("\nNeue Straßen und Hausnummer (" + editAdresse.getStrasse() + "):");
         editAdresse.setStrasse(scan.nextLine());
-        System.out.println("\nNeue Postleitzahl:");
+        System.out.println("\nNeue Postleitzahl (" + editAdresse.getPlz() + "):");
         editAdresse.setPlz(scan.nextLine());
-        System.out.println("\nNeuer Ort:");
+        System.out.println("\nNeuer Ort (" + editAdresse.getOrt() + "):");
         editAdresse.setOrt(scan.nextLine());
 
         return adressen;
     }
 
-    private static ArrayList<Adresse> freundAdressenAnlegen() {
-        ArrayList<Adresse> adressen = new ArrayList<Adresse>();
+    private static ArrayList<Adresse> freundAdressenAnlegen(ArrayList<Adresse> adressen) {
         String weitereAdresseAnlegen = "y";
 
         while (weitereAdresseAnlegen.equals("y")) {
@@ -208,12 +204,11 @@ public class Kartei {
         return value;
     }
 
-
     private void freundLoeschen() {
         System.out.println("\nSchlüssel des Freundes eingeben, der gelöscht werden soll:");
-        int schluessel = scan.nextInt();
+        int removeSchluessel = scan.nextInt();
         scan.nextLine();
-        freunde.removeIf(freund -> (freund.getSchluessel() == schluessel));
+        freunde.removeIf(freund -> (freund.getSchluessel() == removeSchluessel));
     }
 
     private void freundSuchen() {
@@ -227,11 +222,11 @@ public class Kartei {
         });
     }
 
-    private int freundIndexViaSchluesselSuchen(int schluessel) {
+    private int freundIndexViaSchluessel(int findSchluessel) {
         int index = 0;
 
         for (Freund freund : freunde) {
-            if (freund.getSchluessel() == schluessel) {
+            if (freund.getSchluessel() == findSchluessel) {
                 return index;
             }
             index++;
@@ -245,7 +240,7 @@ public class Kartei {
     }
 
     private int zeigeMenue() {
-        ArrayList<Integer> options = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5));
+        List<Integer> options = Arrays.asList(0, 1, 2, 3, 4, 5);
         int auswahl = -1;
 
         System.out.println("\n### Kartei");
@@ -276,24 +271,45 @@ public class Kartei {
     public static void main(String[] args) {
         Kartei kartei = new Kartei();
         int quit = 0;
-
         
-        Adresse adressDummy = new Adresse("PLZ", "Ort", "Strasse");
+        Adresse adress1 = new Adresse("00001", "Ort1", "Strasse 1");
+        Adresse adress2 = new Adresse("00002", "Ort2", "Strasse 2");
+        Adresse adress3 = new Adresse("00003", "Ort3", "Strasse 3");
+        Adresse adress4 = new Adresse("00004", "Ort4", "Strasse 4");
+        Adresse adress5 = new Adresse("00005", "Ort5", "Strasse 5");
+        Adresse adress6 = new Adresse("00006", "Ort6", "Strasse 6");
+        Adresse adress7 = new Adresse("00007", "Ort7", "Strasse 7");
+        Adresse adress8 = new Adresse("00008", "Ort8", "Strasse 8");
 
         ArrayList<Adresse> adressen1 = new ArrayList<Adresse>();
-        adressen1.add(adressDummy);
-        
+        adressen1.add(adress1);
+
         ArrayList<Adresse> adressen2 = new ArrayList<Adresse>();
-        adressen2.add(adressDummy);
-        adressen2.add(adressDummy);
+        adressen2.add(adress2);
+
+        ArrayList<Adresse> adressen3 = new ArrayList<Adresse>();
+        adressen3.add(adress3);
+
+        ArrayList<Adresse> adressen4 = new ArrayList<Adresse>();
+        adressen4.add(adress4);
+
+        ArrayList<Adresse> adressen5 = new ArrayList<Adresse>();
+        adressen5.add(adress5);
+
+        ArrayList<Adresse> adressen6 = new ArrayList<Adresse>();
+        adressen6.add(adress6);
+
+        ArrayList<Adresse> adressen7 = new ArrayList<Adresse>();
+        adressen7.add(adress7);
+        adressen7.add(adress8);
 
         freunde.add(new Freund("Thomas", "Mann", "06.06.1875", adressen1, erzeugeSchluessel()));
-        freunde.add(new Freund("Herrmann", "Hesse", "02.07.1877", adressen1, erzeugeSchluessel()));
-        freunde.add(new Freund("Hans", "Fallada", "21.07.1893", adressen1, erzeugeSchluessel()));
-        freunde.add(new Freund("Rudolf Wilhelm Friedrich", "Ditzen", "21.07.1893", adressen1, erzeugeSchluessel()));
-        freunde.add(new Freund("Franz", "Kafka", "03.07.1983", adressen1, erzeugeSchluessel()));
+        freunde.add(new Freund("Herrmann", "Hesse", "02.07.1877", adressen2, erzeugeSchluessel()));
+        freunde.add(new Freund("Hans", "Fallada", "21.07.1893", adressen3, erzeugeSchluessel()));
+        freunde.add(new Freund("Rudolf Wilhelm Friedrich", "Ditzen", "21.07.1893", adressen4, erzeugeSchluessel()));
+        freunde.add(new Freund("Franz", "Kafka", "03.07.1983", adressen5, erzeugeSchluessel()));
         freunde.add(new Freund("Heinrich", "Böll", "21.12.1917", new ArrayList<Adresse>(), erzeugeSchluessel()));
-        freunde.add(new Freund("Maxi", "Musterfrau", "24.03.1989", adressen2, erzeugeSchluessel()));
+        freunde.add(new Freund("Maxi", "Musterfrau", "24.03.1989", adressen7, erzeugeSchluessel()));
 
         while (quit == 0) {
             anzahlFreunde = kartei.getFreundeAnzahl();
