@@ -27,8 +27,43 @@ public class Kartei {
         return geburtsdatum.matches("^(0?[1-9]|[12][0-9]|3[01])[\\.](0?[1-9]|1[012])[\\.]\\d{4}$");
     }
 
+    
     private static boolean validierePostleitzahl(String plz) {
         return plz.matches("^\\d{5}$");
+    }
+
+    private static String inputString(String label) {
+        switch(label) {
+            case "PLZ":
+                return inputPostleitzahl();
+            case "Geburtsdatum":
+                return inputGeburtsdatum();
+            default:
+                System.out.println("\n" + label + " eingeben: ");
+                return scan.nextLine();  
+        }
+    }
+
+    private static String inputGeburtsdatum() {
+        String geburtsdatum = "";
+
+        while (!validiereGeburtsdatum(geburtsdatum)) {
+            System.out.println("\nGeburtsdatum eingeben (DD.MM.YYYY):");
+            geburtsdatum = scan.nextLine();
+        }
+
+        return geburtsdatum;
+    }
+
+    private static String inputPostleitzahl() {
+        String plz = "";
+
+        while (!validierePostleitzahl(plz)) {
+            System.out.println("\nFünfstellige Postleitzahl eingeben:");
+            plz = scan.nextLine();
+        }
+
+        return plz;
     }
 
     private void freundeAuflisten() {
@@ -65,30 +100,16 @@ public class Kartei {
 
     private void freundHinzufuegen(int addSchluessel) {
         System.out.println("\n### Einen neuen Freundeeintrag anlegen");
-        System.out.println("\nVorname eingeben: ");
-        String vorname = scan.nextLine();
-        System.out.println("\nNachname eingeben: ");
-        String nachname = scan.nextLine();
-        System.out.println("\nGeburtsdatum eingeben (DD.MM.YYYY): ");
-        String geburtsdatum = scan.next();
-        scan.nextLine();
-
-        while (!validiereGeburtsdatum(geburtsdatum)) {
-            System.out.println("\nEingabeformat fehlerhaft! Bitte Geburtsdatum erneut eingeben (DD.MM.YYYY): ");
-            geburtsdatum = scan.next();
-            scan.nextLine();
-        }
-    
-        freunde.add(new Freund(vorname, nachname, geburtsdatum, freundAdressenAnlegen(new ArrayList<Adresse>()), addSchluessel));
+        freunde.add(new Freund(inputString("Vorname"), inputString("Nachname"), inputString("Geburtsdatum"), freundAdressenAnlegen(new ArrayList<Adresse>()), addSchluessel));
     }
 
     private void freundAendern() {
         System.out.println("\nBitte Schlüssel des Freundes eingeben, der bearbeitet werden soll:");
-        int editSchluessel = getInputInt();
+        int editSchluessel = inputInt();
         int freundIndex = freundIndexViaSchluessel(editSchluessel);
 
         if (freundIndex < 0) {
-            System.out.println("\nEs wurde kein Freund mit dem Schlüssel " + editSchluessel + " gefunden.");
+            System.out.println("\nEs wurde kein Freund mit dem Schlüssel " + editSchluessel + " gefunden. \nAktion wird abgebrochen.");
         } 
         else {
             Freund freund = freunde.get(freundIndex);
@@ -105,23 +126,21 @@ public class Kartei {
             System.out.println("(0) Abbrechen");
 
             while (!options.contains(auswahl)) {
-                auswahl = getInputInt();
+                System.out.println("\nAktion auswählen:");
+                auswahl = inputInt();
             }
 
             switch(auswahl) {
                 case 0:
                     return;
                 case 1:
-                    System.out.println("\nNeuer Vorname: ");
-                    freund.setVorname(scan.nextLine());
+                    freund.setVorname(inputString("Vorname"));
                     break;
                 case 2:
-                    System.out.println("\nNeuer Nachname: ");
-                    freund.setNachname(scan.nextLine());
+                    freund.setNachname(inputString("Nachname"));
                     break;
                 case 3:
-                    System.out.println("\nNeues Geburtsdatum: ");
-                    freund.setGeburtsdatum(scan.nextLine());
+                    freund.setGeburtsdatum(inputString("Geburtsdatum"));
                     break;
                 case 4:
                     freund.setAdressen(adressen.isEmpty() ? freundAdressenAnlegen(adressen) : freundAdressenAendern(adressen));
@@ -138,17 +157,14 @@ public class Kartei {
 
         while (adressId < 0 || adressId > adressen.size()) {
             System.out.println("\nWelche Adress-ID soll geändert werden:");
-            adressId = getInputInt() - 1;
+            adressId = inputInt() - 1;
         }
 
         Adresse editAdresse = adressen.get(adressId);        
 
-        System.out.println("\nNeue Straßen und Hausnummer (" + editAdresse.getStrasse() + "):");
-        editAdresse.setStrasse(scan.nextLine());
-        System.out.println("\nNeue Postleitzahl (" + editAdresse.getPlz() + "):");
-        editAdresse.setPlz(scan.nextLine());
-        System.out.println("\nNeuer Ort (" + editAdresse.getOrt() + "):");
-        editAdresse.setOrt(scan.nextLine());
+        editAdresse.setStrasse(inputString("Straße und Hausnummer"));
+        editAdresse.setPlz(inputString("PLZ"));
+        editAdresse.setOrt(inputString("Ort"));
 
         return adressen;
     }
@@ -158,23 +174,7 @@ public class Kartei {
 
         while (weitereAdresseAnlegen.equals("y")) {
             System.out.println("\n### Adresse anlegen");
-            System.out.println("\nStraße und Hausnummer eingeben: ");
-            String strasse = scan.nextLine();
-            System.out.println("\nPostleitzahl eingeben: ");
-            String plz = scan.next();
-            scan.nextLine();
-
-            while (!validierePostleitzahl(plz)) {
-                System.out.println("\nFehlerhafte Eingabe! Bitte fünfstellige PLZ eingeben: ");
-                plz = scan.next();
-                scan.nextLine();
-            }
-
-            System.out.println("\nOrt eingeben: ");
-            String ort = scan.nextLine();
-
-            adressen.add(new Adresse(plz, ort, strasse));
-
+            adressen.add(new Adresse(inputString("PLZ"), inputString("Ort"), inputString("Straße und Hausnummer")));
             System.out.println("\nWeitere Adresse für diesen Freund anlegen? (y/n)");
             weitereAdresseAnlegen = scan.next();
             scan.nextLine();
@@ -183,7 +183,7 @@ public class Kartei {
         return adressen;
     }
 
-    private static int getInputInt() {
+    private static int inputInt() {
         boolean isValid = false;
         int value = -1;
         
@@ -197,7 +197,8 @@ public class Kartei {
                 }
             }
             else {
-                System.out.println("\nUngültige Eingabe. Bitte positive ganze Zahl eingeben:");
+                System.out.println("\nUngültige Eingabe! Bitte positive ganze Zahl eingeben.");
+                scan.nextLine();
             }
         }
 
@@ -206,8 +207,7 @@ public class Kartei {
 
     private void freundLoeschen() {
         System.out.println("\nSchlüssel des Freundes eingeben, der gelöscht werden soll:");
-        int removeSchluessel = scan.nextInt();
-        scan.nextLine();
+        int removeSchluessel = inputInt();
         freunde.removeIf(freund -> (freund.getSchluessel() == removeSchluessel));
     }
 
@@ -253,12 +253,8 @@ public class Kartei {
         System.out.println("### Anzahl deiner Freunde: " + anzahlFreunde);
 
         while (!options.contains(auswahl)) {
-            System.out.println("\nWas möchtest Du tun:");
-
-            if (scan.hasNextInt()) {
-                auswahl = scan.nextInt();
-                scan.nextLine();
-            }
+            System.out.println("\nAktion auswählen:");
+            auswahl = inputInt();
         }
         
         return auswahl;
