@@ -11,6 +11,12 @@ public class Adresse {
     private String ort;
     private String strasse;
 
+    public Adresse() {
+        this.plz = "";
+        this.ort = "";
+        this.strasse = "";
+    }
+
     public Adresse(String plz, String ort, String strasse) {
         this.plz = plz;
         this.ort = ort;
@@ -41,4 +47,7 @@ public class Adresse {
         this.strasse = strasse;
     }
 
+    public boolean validatePostleitzahl(String plz) {
+        return plz.matches("^\\d{5}$");
+    }
 }

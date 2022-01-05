@@ -19,7 +19,14 @@ public class Freund {
     private String geburtsdatum;
     private ArrayList<Adresse> adressen;
 
-    // Konstruktor zum Anlegen eines neuen Freundes
+    public Freund(int schluessel) {
+        this.schluessel = schluessel;
+        this.vorname = "";
+        this.nachname = "";
+        this.geburtsdatum = "";
+        this.adressen = new ArrayList<Adresse>();
+    }
+
     public Freund(String vorname, String nachname, String geburtsdatum, ArrayList<Adresse> adressen, int schluessel) {
         this.schluessel = schluessel;
         this.vorname = vorname;
@@ -28,7 +35,6 @@ public class Freund {
         this.adressen = adressen;
     }
 
-    // Auslesen und Setzen von Attributen
     public String getVorname() {
         return this.vorname;
     }
@@ -63,5 +69,9 @@ public class Freund {
 
     public int getSchluessel() {
         return this.schluessel;
+    }
+
+    public boolean validateGeburtsdatum(String geburtsdatum) {
+        return geburtsdatum.matches("^(0?[1-9]|[12][0-9]|3[01])[\\.](0?[1-9]|1[012])[\\.]\\d{4}$");
     }
 }
