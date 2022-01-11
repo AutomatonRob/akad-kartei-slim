@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 import entitaeten.*;
 
-public class Main {
+public class App {
     private static void createKarteieintraege(Kartei kartei) {
         Adresse adress1 = new Adresse("00001", "Ort1", "Strasse 1");
         Adresse adress2 = new Adresse("00002", "Ort2", "Strasse 2");
@@ -43,6 +43,7 @@ public class Main {
         kartei.freundHinzufuegen(new Freund("Heinrich", "Böll", "21.12.1917", new ArrayList<Adresse>(), kartei.erzeugeSchluessel()));
         kartei.freundHinzufuegen(new Freund("Maxi", "Musterfrau", "24.03.1989", adressen7, kartei.erzeugeSchluessel()));
     }
+
     public static void main(String[] args) {
         Kartei kartei = new Kartei();
         int quit = 0;

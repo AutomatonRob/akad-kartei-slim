@@ -1,10 +1,3 @@
-/*
-    In der Klasse Kartei sollen die Freunde verwaltet werden. Es sollen Methoden zum
-    Hinzufügen, zum Ändern, zum Löschen von Freunde geben. Auch möchte man nach
-    Freunde in der Kartei suchen können (z.B. nach dem Nachnamen oder dem Schlüssel) und
-    die Gesamtanzahl der Freunde, die gespeichert sind, ausgeben können. Berücksichtigen Sie
-    auch mögliche Fehler, die auftreten können.
-*/
 package entitaeten;
 
 import java.util.Scanner;
@@ -16,31 +9,14 @@ import java.util.List;
  * 
  */
 public class Kartei {
-    private final ArrayList<Freund> freunde = new ArrayList<Freund>();
+    private ArrayList<Freund> freunde = new ArrayList<Freund>();
     private int schluessel = 1;
     private int anzahlFreunde = 0;
     private Scanner scan = new Scanner(System.in);
 
-    public void freundeAuflisten() {
-        System.out.println("\n### FREUNDE");
-        System.out.println("Schlüssel | Vorname | Nachname | Geburtsdatum | Adressen");
-
-        for (Freund freund : freunde) {
-            StringBuilder str = new StringBuilder();
-
-            str.append(freund.getSchluessel() + " | " + freund.getVorname() + " | " + freund.getNachname() + " | " + freund.getGeburtsdatum() + " | ");
-            
-            if (!freund.getAdressen().isEmpty()) {
-                ArrayList<Adresse> adressen = freund.getAdressen();
-                str.append(formatAusgabeAdressen(adressen));
-            } 
-            else {
-                str.append("n/a");
-            }
-
-            System.out.println(str.toString());
-        }
-    }
+    /*
+     * PRIVATE METHODS
+     */
 
     private String formatAusgabeAdressen(ArrayList<Adresse> adressen) {
         int index = 0;
@@ -73,6 +49,111 @@ public class Kartei {
         }
 
         return plz;
+    }
+
+    private Adresse freundSetAdresseDialog(Adresse addresse) {
+        System.out.println("Strasse und Hausnummer eingeben:");
+        addresse.setStrasse(scan.nextLine());
+        
+        addresse.setPlz(inputValidatePostleitzahl(addresse));
+        
+        System.out.println("Ort eingeben:");
+        addresse.setOrt(scan.nextLine());
+
+        return addresse;
+    }
+
+    private ArrayList<Adresse> freundAdresseAendern(ArrayList<Adresse> adressen) {
+        int adressId = -1;
+
+        while (adressId < 1 || adressId > adressen.size()) {
+            System.out.println("\nWelche Adress-ID soll geändert werden:");
+            adressId = inputInt();
+        }
+
+        freundSetAdresseDialog(adressen.get(adressId - 1));
+
+        return adressen;
+    }
+
+    private ArrayList<Adresse> freundAdressenAnlegen(ArrayList<Adresse> adressen) {
+        int weitereAdresseAnlegen = 1;
+
+        while (weitereAdresseAnlegen == 1) {
+            Adresse addAdresse = new Adresse();
+            System.out.println("\n### Adresse anlegen");
+
+            freundSetAdresseDialog(addAdresse);
+
+            adressen.add(addAdresse);
+
+            System.out.println("\nWeitere Adresse für diesen Freund anlegen?");
+            System.out.println("(1) Ja");
+            System.out.println("(*) Abbrechen");
+            weitereAdresseAnlegen = inputInt();
+        }
+
+        return adressen;
+    }
+
+    private int inputInt() {
+        boolean isValid = false;
+        int value = -1;
+        
+        while (!isValid) {
+            if (scan.hasNextInt()) {
+                value = scan.nextInt();
+                scan.nextLine();
+
+                if (value >= 0) {
+                    isValid = true;
+                }
+            } else {
+                System.out.println("Ungültige Eingabe. Bitte nur positive ganze Zahlen eingeben.");
+                scan.nextLine();
+            }
+        }
+
+        return value;
+    }
+    
+    private int freundIndexViaSchluessel(int findSchluessel) {
+        int index = 0;
+
+        for (Freund freund : freunde) {
+            if (freund.getSchluessel() == findSchluessel) {
+                return index;
+            }
+
+            index++;
+        }
+
+        return -1;
+    }
+
+    /*
+     * PUBLIC METHODS
+     */
+
+    public void freundeAuflisten() {
+        System.out.println("\n### FREUNDE");
+        System.out.println("Schlüssel | Vorname | Nachname | Geburtsdatum | Adressen");
+
+        for (Freund freund : freunde) {
+            StringBuilder str = new StringBuilder();
+
+            str.append(freund.getSchluessel() + " | " + freund.getVorname() + " | " + freund.getNachname() + " | " + freund.getGeburtsdatum() + " | ");
+            
+            if (!freund.getAdressen().isEmpty()) {
+                ArrayList<Adresse> adressen = freund.getAdressen();
+                str.append(formatAusgabeAdressen(adressen));
+            } 
+            else {
+                str.append("n/a");
+            }
+
+            System.out.println(str.toString());
+        }
     }
 
     public void freundHinzufuegen(Freund addFreund) {
@@ -143,72 +224,6 @@ public class Kartei {
         }
     }
 
-    private Adresse freundSetAdresseDialog(Adresse addresse) {
-        System.out.println("Strasse und Hausnummer eingeben:");
-        addresse.setStrasse(scan.nextLine());
-        
-        addresse.setPlz(inputValidatePostleitzahl(addresse));
-        
-        System.out.println("Ort eingeben:");
-        addresse.setOrt(scan.nextLine());
-
-        return addresse;
-    }
-
-    private ArrayList<Adresse> freundAdresseAendern(ArrayList<Adresse> adressen) {
-        int adressId = -1;
-
-        while (adressId < 1 || adressId > adressen.size()) {
-            System.out.println("\nWelche Adress-ID soll geändert werden:");
-            adressId = inputInt();
-        }
-
-        freundSetAdresseDialog(adressen.get(adressId - 1));
-
-        return adressen;
-    }
-
-    private ArrayList<Adresse> freundAdressenAnlegen(ArrayList<Adresse> adressen) {
-        int weitereAdresseAnlegen = 1;
-
-        while (weitereAdresseAnlegen == 1) {
-            Adresse addAdresse = new Adresse();
-            System.out.println("\n### Adresse anlegen");
-
-            freundSetAdresseDialog(addAdresse);
-
-            adressen.add(addAdresse);
-
-            System.out.println("\nWeitere Adresse für diesen Freund anlegen?");
-            System.out.println("(1) Ja");
-            System.out.println("(*) Abbrechen");
-            weitereAdresseAnlegen = inputInt();
-        }
-
-        return adressen;
-    }
-
-    private int inputInt() {
-        boolean isValid = false;
-        int value = -1;
-        
-        while (!isValid) {
-            if (scan.hasNextInt()) {
-                value = scan.nextInt();
-                scan.nextLine();
-
-                if (value >= 0) {
-                    isValid = true;
-                }
-            } else {
-                System.out.println("Ungültige Eingabe. Bitte nur positive ganze Zahlen eingeben.");
-                scan.nextLine();
-            }
-        }
-
-        return value;
-    }
-
     public void freundLoeschen() {
         System.out.println("\nSchlüssel des Freundes eingeben, der gelöscht werden soll:");
         int removeSchluessel = inputInt();
@@ -224,20 +239,6 @@ public class Kartei {
                 System.out.println("Freund gefunden: (" + freund.getSchluessel() + ") " + freund.getVorname() + " " + freund.getNachname());
             }
         });
-    }
-
-    private int freundIndexViaSchluessel(int findSchluessel) {
-        int index = 0;
-
-        for (Freund freund : freunde) {
-            if (freund.getSchluessel() == findSchluessel) {
-                return index;
-            }
-
-            index++;
-        }
-
-        return -1;
     }
 
     public int erzeugeSchluessel() {

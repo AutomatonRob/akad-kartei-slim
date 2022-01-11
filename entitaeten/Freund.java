@@ -1,13 +1,3 @@
-/*
-    In der Klasse Freund werden die Vornamen, Nachname, Geburtsdatum und Adressen der
-    Freunde gespeichert. Außerdem benötigen Sie noch eine Variable, welche jedes Objekt
-    „Freund“ eindeutig identifiziert (Schlüssel). Es gibt Methoden zum Anlegen von neuen
-    Freunden, sowie zum Auslesen und zu den Änderungen einzelner wesentlicher Attribute.
-    Außerdem sollen die Freunde auch mehrere Adressen haben können. Stellen Sie für diese
-    Problemstellung nur die wichtigen Methoden zum Auslesen und Ändern der Attribute zur
-    Verfügung. Berücksichtigen Sie auch mögliche Fehler, die auftreten können.
-*/
-
 package entitaeten;
 
 import java.util.ArrayList;
