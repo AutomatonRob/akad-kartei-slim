@@ -6,18 +6,34 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 
+ * Kartei ist die Hauptklasse welche für die Verwaltung von Freunden dient.
  */
 public class Kartei {
+    /**
+     * Ein dynamisches Feld, welches die Datensätze aller in der Kartei gespeicherten Freunde enthält.  
+     */
     private ArrayList<Freund> freunde = new ArrayList<Freund>();
+
+    /**
+     * Einzigartiger, unveränderlicher Schlüssel, mit dem eine Datensatz eindeutig identifiziert werden kann.
+     */
     private int schluessel = 1;
+
+    /**
+     * Gesamtzahl der Datensätze in der Kartei.
+     */
     private int anzahlFreunde = 0;
+
+    /**
+     * Instanz von java.util.Scanner zum Einlesen von Benutereingaben.
+     */
     private Scanner scan = new Scanner(System.in);
 
-    /*
-     * PRIVATE METHODS
-     */
-
+    /**
+      * Hilfsfunktion, um eine Liste aus Adressen zu einer Zeichenkette zusammenzusetzen. 
+      * @param adressen Ein dynamisches Feld von Adress-Objekten.
+      * @return Eine Zeichenkette aller Adressen.
+      */
     private String formatAusgabeAdressen(ArrayList<Adresse> adressen) {
         int index = 0;
         String[] arrStr = new String[adressen.size()];
@@ -29,10 +45,15 @@ public class Kartei {
         return String.join(" ", arrStr);
     }
 
-    private String inputValidatedGeburtsdatum(Freund freund) {
+    /**
+     * Eingabedialog zum Erfassen des Geburtsdatums im Format 'DD-MM-YYYY'. 
+     * Die Eingabe wird auf konsistenz geprüft und ggf. wiederholt abgefragt.
+     * @return Ein Geburtsdatum im Format 'DD-MM-YYYY'.
+     */
+    private String inputValidatedGeburtsdatum() {
         String geburtsdatum = "";
 
-        while(!freund.validateGeburtsdatum(geburtsdatum)) {
+        while(!Freund.validateGeburtsdatum(geburtsdatum)) {
             System.out.println("\nGeburtsdatum eingeben (DD.MM.YYYY):");
             geburtsdatum = scan.nextLine();
         }
@@ -40,10 +61,15 @@ public class Kartei {
         return geburtsdatum;
     }
 
-    private String inputValidatePostleitzahl(Adresse adresse) {
+    /**
+     * Eingabedialog zum Erfassen einer Postleitzahl im Format 'NNNNN'. 
+     * Die Eingabe wird auf konsistenz geprüft und ggf. wiederholt abgefragt.
+     * @return Eine Postleitzahl im Format 'NNNNN'.
+     */
+    private String inputValidatePostleitzahl() {
         String plz = "";
 
-        while(!adresse.validatePostleitzahl(plz)) {
+        while(!Adresse.validatePostleitzahl(plz)) {
             System.out.println("\nFünfstellige Postleitzahl eingeben:");
             plz = scan.nextLine();
         }
@@ -51,11 +77,16 @@ public class Kartei {
         return plz;
     }
 
+    /**
+     * Eingabedialog zum Erfassen oder Verändern einer Adresse. 
+     * @param addresse Adress-Objekt, welches verändert oder befüllt werden soll.
+     * @return Adress-Objekt, welches die neuen Daten enhält.
+     */
     private Adresse freundSetAdresseDialog(Adresse addresse) {
         System.out.println("Strasse und Hausnummer eingeben:");
         addresse.setStrasse(scan.nextLine());
         
-        addresse.setPlz(inputValidatePostleitzahl(addresse));
+        addresse.setPlz(inputValidatePostleitzahl());
         
         System.out.println("Ort eingeben:");
         addresse.setOrt(scan.nextLine());
@@ -63,6 +94,11 @@ public class Kartei {
         return addresse;
     }
 
+    /**
+     * Eingabedialog zur Auswahl eines Adressdatensatzes, der geändert werden soll.
+     * @param adressen Ein dynamisches Feld von Adress-Objekten, das bearbeitet werden soll.
+     * @return Ein dynamisches Feld von Adress-Objekten.
+     */
     private ArrayList<Adresse> freundAdresseAendern(ArrayList<Adresse> adressen) {
         int adressId = -1;
 
@@ -76,6 +112,11 @@ public class Kartei {
         return adressen;
     }
 
+    /**
+     * Eingabedialog zur Erzeugung von Adress-Objekten, die zu einer dynamischen Liste von Adressen hinzugefügt werden.
+     * @param adressen Leeres oder bereits befülltes Feld von Adress-Objekten.
+     * @return Ein dynamisches Feld von Adress-Objekten.
+     */
     private ArrayList<Adresse> freundAdressenAnlegen(ArrayList<Adresse> adressen) {
         int weitereAdresseAnlegen = 1;
 
@@ -96,6 +137,10 @@ public class Kartei {
         return adressen;
     }
 
+    /**
+     * Eingabedialog für positive natürliche Ganzzahlen mit Konsistenzprüfung.
+     * @return Eine positive natürliche Ganzzahl.
+     */
     private int inputInt() {
         boolean isValid = false;
         int value = -1;
@@ -117,6 +162,11 @@ public class Kartei {
         return value;
     }
     
+    /**
+     * Hilfsfunktion zum Auffinden des Indices eines Freund-Datensatzes anhand von dessen Schlüssel.
+     * @param findSchluessel Eingegebener Schlüssel.
+     * @return Index des Freund-Datensatzes oder -1, falls für den Schlüssel kein Datensatz vorhanden ist.
+     */
     private int freundIndexViaSchluessel(int findSchluessel) {
         int index = 0;
 
@@ -131,10 +181,9 @@ public class Kartei {
         return -1;
     }
 
-    /*
-     * PUBLIC METHODS
+    /**
+     * Ausgabedialog zur Auflistung aller in der Kartei gespeicherten Freund-Datensätze.
      */
-
     public void freundeAuflisten() {
         System.out.println("\n### FREUNDE");
         System.out.println("Schlüssel | Vorname | Nachname | Geburtsdatum | Adressen");
@@ -170,9 +219,12 @@ public class Kartei {
         System.out.println("\nNachname eingeben:");
         addFreund.setNachname(scan.nextLine());
 
-        inputValidatedGeburtsdatum(addFreund);
+        inputValidatedGeburtsdatum();
     }
 
+    /**
+     * Interaktiver Dialog zum Editieren eines vorhandenen Freund-Datensatzes.
+     */
     public void freundAendern() {
         System.out.println("\nBitte Schlüssel des Freundes eingeben, der bearbeitet werden soll:");
         int editSchluessel = inputInt();
@@ -212,7 +264,7 @@ public class Kartei {
                     freund.setNachname(scan.nextLine());
                     break;
                 case 3:
-                    freund.setGeburtsdatum(inputValidatedGeburtsdatum(freund));
+                    freund.setGeburtsdatum(inputValidatedGeburtsdatum());
                     break;
                 case 4:
                     freund.setAdressen(adressen.isEmpty() ? freundAdressenAnlegen(adressen) : freundAdresseAendern(adressen));
@@ -224,12 +276,20 @@ public class Kartei {
         }
     }
 
+    /**
+     * Eingabedialog zum Löschen eines Freund-Datensatzes anhand des Schlüssel.
+     */
     public void freundLoeschen() {
         System.out.println("\nSchlüssel des Freundes eingeben, der gelöscht werden soll:");
         int removeSchluessel = inputInt();
         freunde.removeIf(freund -> (freund.getSchluessel() == removeSchluessel));
     }
 
+    /**
+     * Eingabedialog zur Suche von Freunden anhand von Schlüssel, Vorname oder Nachname.
+     * Die Ausgabe der Treffer erfolgt bei exakter Übereinstimmung des Schlüssel oder teilweiser Übereinstimmung der 
+     * eingegebenen Zeichenkette mit Vor- oder Nachname. 
+     */
     public void freundSuchen() {
         System.out.println("\nBitte Schlüssel, Vorname oder Nachname eines Freundes eingeben, nachdem gesucht werden soll:");
         String value = scan.nextLine();
@@ -241,6 +301,10 @@ public class Kartei {
         });
     }
 
+    /**
+     * Erzeugung einzigartiger, ganzzahliger Schlüssel.
+     * @return Einzigartiger, ganzzahliger Schlüssel.
+     */
     public int erzeugeSchluessel() {
         return schluessel++;
     }
@@ -266,6 +330,10 @@ public class Kartei {
         return auswahl;
     }
 
+    /**
+     * Rückgabe der Gesamtzahl der Freunde.
+     * @return Gesamtzahl der Freunde.
+     */
     public int getFreundeAnzahl() {
         return freunde.size();
     }
