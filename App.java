@@ -35,13 +35,13 @@ public class App {
         adressen7.add(adress7);
         adressen7.add(adress8);
 
-        kartei.freundHinzufuegen(new Freund("Thomas", "Mann", "06.06.1875", adressen1, kartei.erzeugeSchluessel()));
-        kartei.freundHinzufuegen(new Freund("Herrmann", "Hesse", "02.07.1877", adressen2, kartei.erzeugeSchluessel()));
-        kartei.freundHinzufuegen(new Freund("Hans", "Fallada", "21.07.1893", adressen3, kartei.erzeugeSchluessel()));
-        kartei.freundHinzufuegen(new Freund("Rudolf Wilhelm Friedrich", "Ditzen", "21.07.1893", adressen4, kartei.erzeugeSchluessel()));
-        kartei.freundHinzufuegen(new Freund("Franz", "Kafka", "03.07.1983", adressen5, kartei.erzeugeSchluessel()));
-        kartei.freundHinzufuegen(new Freund("Heinrich", "Böll", "21.12.1917", new ArrayList<Adresse>(), kartei.erzeugeSchluessel()));
-        kartei.freundHinzufuegen(new Freund("Maxi", "Musterfrau", "24.03.1989", adressen7, kartei.erzeugeSchluessel()));
+        kartei.freundHinzufuegen(new Freund("Thomas", "Mann", "06.06.1875", adressen1));
+        kartei.freundHinzufuegen(new Freund("Herrmann", "Hesse", "02.07.1877", adressen2));
+        kartei.freundHinzufuegen(new Freund("Hans", "Fallada", "21.07.1893", adressen3));
+        kartei.freundHinzufuegen(new Freund("Rudolf Wilhelm Friedrich", "Ditzen", "21.07.1893", adressen4));
+        kartei.freundHinzufuegen(new Freund("Franz", "Kafka", "03.07.1983", adressen5));
+        kartei.freundHinzufuegen(new Freund("Heinrich", "Böll", "21.12.1917", new ArrayList<Adresse>()));
+        kartei.freundHinzufuegen(new Freund("Maxi", "Musterfrau", "24.03.1989", adressen7));
     }
 
     public static void main(String[] args) {
@@ -67,7 +67,7 @@ public class App {
                     kartei.freundAendern();
                     break;
                 case 4:
-                    kartei.freundHinzufuegen(kartei.erzeugeSchluessel());
+                    kartei.freundAnlegen();
                     break;
                 case 5:
                     kartei.freundLoeschen();
