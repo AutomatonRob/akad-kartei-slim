@@ -8,10 +8,12 @@ import java.util.ArrayList;
  * eindeutigen Identifizierung.
  */
 public class Freund {
+    private static int schluesselSeed = 1;
+
     /**
      * Einzigartiger, ganzzahliger Schlüssel, der ein Freund-Objekt eindeutig identifiziert.
      */
-    private static int schluessel = 1;
+    private int schluessel;
     
     /**
      * Vorname des Freund-Objektes.
@@ -52,10 +54,9 @@ public class Freund {
      * @param nachname Nachname
      * @param geburtsdatum Geburtsdatum im Format: DD.MM.YYYY
      * @param adressen Liste von Adressen des Freund-Objektes
-     * @param schluessel Einzigartiger Schlüssel
      */
-    public Freund(String vorname, String nachname, String geburtsdatum, ArrayList<Adresse> adressen, int schluessel) {
-        this.schluessel = schluessel;
+    public Freund(String vorname, String nachname, String geburtsdatum, ArrayList<Adresse> adressen) {
+        this.schluessel = erzeugeSchluessel();
         this.vorname = vorname;
         this.nachname = nachname;
         this.geburtsdatum = geburtsdatum;
@@ -147,7 +148,7 @@ public class Freund {
      * Erzeugung eines einzigartigen, ganzzahligen Schlüssels.
      * @return Einzigartiger, ganzzahliger Schlüssel
      */
-    private int erzeugeSchluessel() {
-        return schluessel++;
+    private static int erzeugeSchluessel() {
+        return schluesselSeed++;
     }
 }
