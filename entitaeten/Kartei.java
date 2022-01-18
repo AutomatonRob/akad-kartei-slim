@@ -15,11 +15,6 @@ public class Kartei {
     private ArrayList<Freund> freunde = new ArrayList<Freund>();
 
     /**
-     * Einzigartiger, unveränderlicher Schlüssel, mit dem eine Datensatz eindeutig identifiziert werden kann.
-     */
-    private static int schluessel = 1;
-
-    /**
      * Gesamtzahl der Datensätze in der Kartei.
      */
     private int anzahlFreunde = 0;
@@ -83,12 +78,12 @@ public class Kartei {
      * @return Adress-Objekt, welches die neuen Daten enhält
      */
     private Adresse freundSetAdresseDialog(Adresse addresse) {
-        System.out.println("Strasse und Hausnummer eingeben:");
+        System.out.println("\nStraße und Hausnummer eingeben:");
         addresse.setStrasse(scan.nextLine());
         
         addresse.setPlz(inputValidatePostleitzahl());
         
-        System.out.println("Ort eingeben:");
+        System.out.println("\nOrt eingeben:");
         addresse.setOrt(scan.nextLine());
 
         return addresse;
@@ -130,7 +125,7 @@ public class Kartei {
 
             System.out.println("\nWeitere Adresse für diesen Freund anlegen?");
             System.out.println("(1) Ja");
-            System.out.println("(*) Abbrechen");
+            System.out.println("(0) Abbrechen");
             weitereAdresseAnlegen = inputInt();
         }
 
@@ -228,6 +223,8 @@ public class Kartei {
 
         addFreund.setGeburtsdatum(inputValidatedGeburtsdatum());
 
+        addFreund.setAdressen(freundAdressenAnlegen(new ArrayList<Adresse>()));
+
         freunde.add(addFreund);
     }
 
@@ -239,7 +236,7 @@ public class Kartei {
         int editSchluessel = inputInt();
         int freundIndex = freundIndexViaSchluessel(editSchluessel);
 
-        if (freundIndex <= 0) {
+        if (freundIndex < 0) {
             System.out.println("\nEs wurde kein Freund mit dem Schlüssel " + editSchluessel + " gefunden. \nAktion wird abgebrochen.");
         } 
         else {
@@ -321,7 +318,7 @@ public class Kartei {
         System.out.println("\n### Kartei");
         System.out.println("(1) Zeige alle Freunde");
         System.out.println("(2) Freundekartei durchsuchen");
-        System.out.println("(3) Ändere die Daten eines Freundes");
+        System.out.println("(3) Daten eines Freundes ändern");
         System.out.println("(4) Einen neuen Eintrag anlegen");
         System.out.println("(5) Lösche einen Freund");
         System.out.println("(0) Beenden");
