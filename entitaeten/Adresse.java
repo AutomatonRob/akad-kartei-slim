@@ -25,9 +25,7 @@ public class Adresse {
      * Konstruktor zur Erzeugung eines leeren Adress-Objektes.
      */
     public Adresse() {
-        this.plz = "";
-        this.ort = "";
-        this.strasse = "";
+        this("", "", "");
     }
 
     /**

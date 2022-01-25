@@ -37,14 +37,9 @@ public class Freund {
 
     /**
      * Konstruktor zur Erzeugung eines leeren Freund-Objektes mit einzigartigem Schlüssel. 
-     * @param schluessel Einzigartiger Schlüssel
      */
     public Freund() {
-        this.schluessel = erzeugeSchluessel();
-        this.vorname = "";
-        this.nachname = "";
-        this.geburtsdatum = "";
-        this.adressen = new ArrayList<Adresse>();
+        this("", "", "", new ArrayList<Adresse>());
     }
 
     /**

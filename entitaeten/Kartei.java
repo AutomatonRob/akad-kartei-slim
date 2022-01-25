@@ -15,12 +15,7 @@ public class Kartei {
     private ArrayList<Freund> freunde = new ArrayList<Freund>();
 
     /**
-     * Gesamtzahl der Datensätze in der Kartei.
-     */
-    private int anzahlFreunde = 0;
-
-    /**
-     * Instanz von java.util.Scanner zum Einlesen von Benutereingaben.
+     * Instanz von java.util.Scanner zum Einlesen von Benutzereingaben.
      */
     private Scanner scan = new Scanner(System.in);
 
@@ -131,31 +126,6 @@ public class Kartei {
 
         return adressen;
     }
-
-    /**
-     * Eingabedialog für positive natürliche Ganzzahlen mit Konsistenzprüfung.
-     * @return Positive natürliche Ganzzahl
-     */
-    private int inputInt() {
-        boolean isValid = false;
-        int value = -1;
-        
-        while (!isValid) {
-            if (scan.hasNextInt()) {
-                value = scan.nextInt();
-                scan.nextLine();
-
-                if (value >= 0) {
-                    isValid = true;
-                }
-            } else {
-                System.out.println("Ungültige Eingabe. Bitte nur positive ganze Zahlen eingeben.");
-                scan.nextLine();
-            }
-        }
-
-        return value;
-    }
     
     /**
      * Hilfsfunktion zum Auffinden des Indices eines Freund-Datensatzes anhand von dessen Schlüssel.
@@ -212,20 +182,19 @@ public class Kartei {
      * Dialog zum Anlegen eines neuen Freund-Objektes.
      */
     public void freundAnlegen() {
-        Freund addFreund = new Freund(); 
         System.out.println("\n### Einen neuen Freundeeintrag anlegen");
 
         System.out.println("\nVorname eingeben:");
-        addFreund.setVorname(scan.nextLine());
+        String vorname = scan.nextLine();
 
         System.out.println("\nNachname eingeben:");
-        addFreund.setNachname(scan.nextLine());
+        String nachname = scan.nextLine();
 
-        addFreund.setGeburtsdatum(inputValidatedGeburtsdatum());
+        String geburtsdatum = inputValidatedGeburtsdatum();
 
-        addFreund.setAdressen(freundAdressenAnlegen(new ArrayList<Adresse>()));
+        ArrayList<Adresse> adressen = freundAdressenAnlegen(new ArrayList<Adresse>());
 
-        freunde.add(addFreund);
+        freunde.add(new Freund(vorname, nachname, geburtsdatum, adressen));
     }
 
     /**
@@ -283,12 +252,22 @@ public class Kartei {
     }
 
     /**
-     * Eingabedialog zum Löschen eines Freund-Datensatzes anhand des Schlüssel.
+     * Entfernen eines Freund-Objektes anhand des übergebenen Schlüssels.
+     * Überladene Methode.
+     * @param removeSchluessel Schlüssel des Freund-Objektes, dass entfernt werden soll
+     */
+    public void freundLoeschen(int removeSchluessel) {
+        freunde.removeIf(freund -> (freund.getSchluessel() == removeSchluessel));
+    }
+
+    /**
+     * Eingabedialog zur Erfassung des Schlüssels eines Freund-Objektes, welches aus der Kartei entfernt werden soll.
+     * Überladene Methode.
      */
     public void freundLoeschen() {
-        System.out.println("\nSchlüssel des Freundes eingeben, der gelöscht werden soll:");
+        System.out.println("\nSchlüssel des Freundes eingeben, der aus der Kartei entfernt werden soll:");
         int removeSchluessel = inputInt();
-        freunde.removeIf(freund -> (freund.getSchluessel() == removeSchluessel));
+        freundLoeschen(removeSchluessel);
     }
 
     /**
@@ -308,35 +287,43 @@ public class Kartei {
     }
 
     /**
-     * Basis-Menü. Interaktiver Dialog zur Auswahl einer Aktion.
-     * @return Ganzzahl des ausgewählten Menüpunktes
-     */
-    public int zeigeMenue() {
-        List<Integer> options = Arrays.asList(0, 1, 2, 3, 4, 5);
-        int auswahl = -1;
-
-        System.out.println("\n### Kartei");
-        System.out.println("(1) Zeige alle Freunde");
-        System.out.println("(2) Freundekartei durchsuchen");
-        System.out.println("(3) Daten eines Freundes ändern");
-        System.out.println("(4) Einen neuen Eintrag anlegen");
-        System.out.println("(5) Lösche einen Freund");
-        System.out.println("(0) Beenden");
-        System.out.println("### Anzahl deiner Freunde: " + anzahlFreunde);
-
-        while (!options.contains(auswahl)) {
-            System.out.println("\nAktion auswählen:");
-            auswahl = inputInt();
-        }
-        
-        return auswahl;
-    }
-
-    /**
      * Gibt die Anzahl der Freund-Objekte in der Kartei zurück.
      * @return Gesamtzahl der Freunde
      */
     public int getFreundeAnzahl() {
         return freunde.size();
+    }
+
+    /**
+     * Rückgabe einer Liste aller Freund-Objekte in der Kartei
+     * @return Liste aller Freunde in der Kartei
+     */
+    public ArrayList<Freund> getFreunde() {
+        return this.freunde;
+    }
+
+    /**
+     * Eingabedialog für positive natürliche Ganzzahlen mit Konsistenzprüfung.
+     * @return Positive natürliche Ganzzahl
+     */
+    public int inputInt() {
+        boolean isValid = false;
+        int value = -1;
+        
+        while (!isValid) {
+            if (scan.hasNextInt()) {
+                value = scan.nextInt();
+                scan.nextLine();
+
+                if (value >= 0) {
+                    isValid = true;
+                }
+            } else {
+                System.out.println("Ungültige Eingabe. Bitte nur positive ganze Zahlen eingeben.");
+                scan.nextLine();
+            }
+        }
+
+        return value;
     }
 }
