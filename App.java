@@ -5,7 +5,7 @@ import java.util.List;
 import entitaeten.*;
 
 /**
- * Main Programm.
+ * Main Programm mit Hauptmenü.
  */
 public class App {
 
@@ -43,20 +43,6 @@ public class App {
         kartei.freundHinzufuegen(new Freund());
     }
 
-    /**
-     * Basis-Menü. Interaktiver Dialog zur Auswahl einer Aktion.
-     * @return Ganzzahl des ausgewählten Menüpunktes
-     */
-    public int zeigeMenue() {
-        List<Integer> options = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
-        int auswahl = -1;
-
-
-
-        
-        return auswahl;
-    }
-
     /*
      * Die main Methode instanziiert eine Kartei und erzeugt bis zur Beendingung des Programmes das 
      * Hauptmenü mit allen enthaltenen Funktionalitäten. Nach jedem Durchlauf einer Funktionalität
@@ -71,8 +57,8 @@ public class App {
             System.out.println("(1) Zeige alle Freunde");
             System.out.println("(2) Freundekartei durchsuchen");
             System.out.println("(3) Daten eines Freundes ändern");
-            System.out.println("(4) Einen neuen Eintrag anlegen");
-            System.out.println("(5) Lösche einen Freund");
+            System.out.println("(4) Einen neuen Freund anlegen");
+            System.out.println("(5) Einen Freund löschen");
             System.out.println("(6) Testdatensätze laden");
             System.out.println("(7) Aufgaben lösen");
             System.out.println("(0) Beenden");
