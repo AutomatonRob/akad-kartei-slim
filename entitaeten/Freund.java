@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * eindeutigen Identifizierung.
  */
 public class Freund {
-    private static int schluesselSeed = 1;
+    private int schluesselSeed = 1;
 
     /**
      * Einzigartiger, ganzzahliger Schlüssel, der ein Freund-Objekt eindeutig identifiziert.
@@ -143,7 +143,7 @@ public class Freund {
      * Erzeugung eines einzigartigen, ganzzahligen Schlüssels.
      * @return Einzigartiger, ganzzahliger Schlüssel
      */
-    private static int erzeugeSchluessel() {
+    private int erzeugeSchluessel() {
         return schluesselSeed++;
     }
 }

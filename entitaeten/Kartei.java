@@ -69,19 +69,19 @@ public class Kartei {
 
     /**
      * Eingabedialog zum Erfassen oder Verändern einer Adresse. 
-     * @param addresse Adress-Objekt, welches verändert oder befüllt werden soll
+     * @param adresse Adress-Objekt, welches verändert oder befüllt werden soll
      * @return Adress-Objekt, welches die neuen Daten enhält
      */
-    private Adresse freundSetAdresseDialog(Adresse addresse) {
+    private Adresse freundSetAdresseDialog(Adresse adresse) {
         System.out.println("\nStraße und Hausnummer eingeben:");
-        addresse.setStrasse(scan.nextLine());
+        adresse.setStrasse(scan.nextLine());
         
-        addresse.setPlz(inputValidatePostleitzahl());
+        adresse.setPlz(inputValidatePostleitzahl());
         
         System.out.println("\nOrt eingeben:");
-        addresse.setOrt(scan.nextLine());
+        adresse.setOrt(scan.nextLine());
 
-        return addresse;
+        return adresse;
     }
 
     /**
