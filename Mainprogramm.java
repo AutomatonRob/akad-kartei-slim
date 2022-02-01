@@ -7,11 +7,11 @@ import entitaeten.*;
 /**
  * Main Programm mit Hauptmenü.
  */
-public class App {
+public class Mainprogramm {
 
     /**
      * Hilfsfunktion zum Erzeugen von Testdatensätzen.
-     * @param kartei
+     * @param kartei Kartei-Objekt
      */
     private static void createKarteieintraege(Kartei kartei) {
         ArrayList<Adresse> adressen1 = new ArrayList<Adresse>();
