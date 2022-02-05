@@ -53,7 +53,7 @@ public class Kartei {
 
     /**
      * Eingabedialog zum Erfassen einer Postleitzahl im Format 'NNNNN'. 
-     * Die Eingabe wird auf konsistenz geprüft und ggf. wiederholt abgefragt.
+     * Die Eingabe wird auf konsistenz geprüft und ggf. wiederholt abgefragt.~~
      * @return Eine Postleitzahl im Format: NNNNN
      */
     private String inputValidatePostleitzahl() {

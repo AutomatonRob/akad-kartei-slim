@@ -39,7 +39,7 @@ public class Mainprogramm {
         kartei.freundHinzufuegen(new Freund("Rudolf Wilhelm Friedrich", "Ditzen", "21.07.1893", adressen4));
         kartei.freundHinzufuegen(new Freund("Franz", "Kafka", "03.07.1983", adressen5));
         kartei.freundHinzufuegen(new Freund("Heinrich", "Böll", "21.12.1917", new ArrayList<Adresse>()));
-        kartei.freundHinzufuegen(new Freund("Maxi", "Musterfrau", "24.03.1989", adressen6));
+        kartei.freundHinzufuegen(new Freund("Ulla", "Hahn", "30.04.1945", adressen6));
         kartei.freundHinzufuegen(new Freund());
     }
 
