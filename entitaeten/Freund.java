@@ -75,7 +75,7 @@ public class Freund {
     }
 
     /**
-     * Rückgabe des Nachnames eines Freund-Objektes.
+     * Rückgabe des Nachnamens eines Freund-Objektes.
      * @return Nachname
      */
     public String getNachname() {
@@ -83,7 +83,7 @@ public class Freund {
     }
 
     /**
-     * Änderung des Nachnames eines Freund-Objektes.
+     * Änderung des Nachnamens eines Freund-Objektes.
      * @param nachname Neuer Nachname
      */
     public void setNachname(String nachname) {
@@ -133,7 +133,7 @@ public class Freund {
     /**
      * Überprüfung des eingegebenen Geburtsdatums auf das Format: DD.MM.YYYY
      * @param geburtsdatum Zu prüfendes Geburtsdatum
-     * @return Wahr, wenn das eingegebenen Geburtsdatum dem Muster enspricht
+     * @return Wahr, wenn das eingegebenen Geburtsdatum dem Muster entspricht
      */
     public static boolean validateGeburtsdatum(String geburtsdatum) {
         return geburtsdatum.matches("^(0?[1-9]|[12][0-9]|3[01])[\\.](0?[1-9]|1[012])[\\.]\\d{4}$");

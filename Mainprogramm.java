@@ -5,7 +5,7 @@ import java.util.List;
 import entitaeten.*;
 
 /**
- * Mainpogramm mit Hauptmenü.
+ * Mainprogramm mit Hauptmenü.
  */
 public class Mainprogramm {
 
@@ -55,7 +55,7 @@ public class Mainprogramm {
         while (true) {
             System.out.println("\n### Kartei");
             System.out.println("(1) Zeige alle Freunde");
-            System.out.println("(2) Freundekartei durchsuchen");
+            System.out.println("(2) Kartei durchsuchen");
             System.out.println("(3) Daten eines Freundes ändern");
             System.out.println("(4) Einen neuen Freund anlegen");
             System.out.println("(5) Einen Freund löschen");

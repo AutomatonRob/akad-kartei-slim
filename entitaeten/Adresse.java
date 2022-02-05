@@ -91,7 +91,7 @@ public class Adresse {
     /**
      * Überprüfung der eingegebenen Postleitzahl auf das Format: NNNNN
      * @param plz Zu prüfende Postleitzahl
-     * @return Wahr, wenn die eingegebene Postleitzahl dem Muster enspricht
+     * @return Wahr, wenn die eingegebene Postleitzahl dem Muster entspricht
      */
     public static boolean validatePostleitzahl(String plz) {
         return plz.matches("^\\d{5}$");

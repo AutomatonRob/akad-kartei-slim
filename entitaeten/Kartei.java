@@ -17,7 +17,7 @@ public class Kartei {
     /**
      * Instanz von java.util.Scanner zum Einlesen von Benutzereingaben.
      */
-    private Scanner scan = new Scanner(System.in);
+    private Scanner scan = new Scanner(System.in, "ISO-8859-1");
 
     /**
       * Hilfsfunktion, um eine Liste aus Adressen zu einer Zeichenkette zusammenzusetzen. 
@@ -37,7 +37,7 @@ public class Kartei {
 
     /**
      * Eingabedialog zum Erfassen des Geburtsdatums im Format 'DD-MM-YYYY'. 
-     * Die Eingabe wird auf konsistenz geprüft und ggf. wiederholt abgefragt.
+     * Die Eingabe wird auf Konsistenz geprüft und ggf. wiederholt abgefragt.
      * @return Ein Geburtsdatum im Format: DD.MM.YYYY
      */
     private String inputValidatedGeburtsdatum() {
@@ -53,7 +53,7 @@ public class Kartei {
 
     /**
      * Eingabedialog zum Erfassen einer Postleitzahl im Format 'NNNNN'. 
-     * Die Eingabe wird auf konsistenz geprüft und ggf. wiederholt abgefragt.~~
+     * Die Eingabe wird auf Konsistenz geprüft und ggf. wiederholt abgefragt.~~
      * @return Eine Postleitzahl im Format: NNNNN
      */
     private String inputValidatePostleitzahl() {
@@ -70,7 +70,7 @@ public class Kartei {
     /**
      * Eingabedialog zum Erfassen oder Verändern einer Adresse. 
      * @param adresse Adress-Objekt, welches verändert oder befüllt werden soll
-     * @return Adress-Objekt, welches die neuen Daten enhält
+     * @return Adress-Objekt, welches die neuen Daten enthält
      */
     private Adresse freundSetAdresseDialog(Adresse adresse) {
         System.out.println("\nStraße und Hausnummer eingeben:");
