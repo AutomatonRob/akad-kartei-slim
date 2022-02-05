@@ -5,7 +5,7 @@ import java.util.List;
 import entitaeten.*;
 
 /**
- * Main Programm mit Hauptmenü.
+ * Mainpogramm mit Hauptmenü.
  */
 public class Mainprogramm {
 
@@ -44,8 +44,8 @@ public class Mainprogramm {
     }
 
     /*
-     * Die main Methode instanziiert eine Kartei und erzeugt bis zur Beendingung des Programmes das 
-     * Hauptmenü mit allen enthaltenen Funktionalitäten. Nach jedem Durchlauf einer Funktionalität
+     * Die main() Methode instanziiert eine Kartei und erzeugt bis zur Beendingung des Programmes das 
+     * Hauptmenü mit allen enthaltenen Programmfunktionen. Nach jedem Durchlauf eines Programmfunktion
      * erfolgt die Rückkehr in das Hauptmenü.
      */
     public static void main(String[] args) {
